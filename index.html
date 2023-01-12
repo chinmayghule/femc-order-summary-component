@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32"
+    href="./images/favicon-32x32.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap"
+    rel="stylesheet">
+
+  <title>Order summary card</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body,
+    h1,
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      display: block;
+      font-size: 0;
+      width: 100%;
+    }
+
+    :root {
+
+      /* COLORS */
+      --primary-paleBlue: hsl(225, 100%, 94%);
+      --primary-brightBlue: hsl(245, 75%, 52%);
+
+      --neutral-white: hsl(0, 0%, 100%);
+      --neutral-veryPaleBlue: hsl(225, 100%, 98%);
+      --neutral-desaturatedBlue: hsl(224, 23%, 55%);
+      --neutral-darkBlue: hsl(223, 47%, 23%);
+
+
+      /* SPACE */
+      --space-3xs: clamp(0.25rem, calc(0.24rem + 0.08vw), 0.31rem);
+      --space-2xs: clamp(0.50rem, calc(0.48rem + 0.17vw), 0.63rem);
+      --space-xs: clamp(0.75rem, calc(0.71rem + 0.25vw), 0.94rem);
+      --space-s: clamp(1.00rem, calc(0.95rem + 0.33vw), 1.25rem);
+      --space-m: clamp(1.50rem, calc(1.43rem + 0.50vw), 1.88rem);
+      --space-l: clamp(2.00rem, calc(1.90rem + 0.67vw), 2.50rem);
+      --space-xl: clamp(3.00rem, calc(2.85rem + 1.00vw), 3.75rem);
+
+
+
+      /* FONT FAMILY */
+      --ff-primary: 'Red Hat Display', sans-serif;
+
+      /* FONT WEIGHTS */
+      --fw-500: 500;
+      --fw-700: 700;
+      --fw-900: 900;
+
+
+      /* TYPE */
+      /* --step-0: clamp(1.00rem, calc(0.95rem + 0.33vw), 1.25rem);
+      --step-1: clamp(1.20rem, calc(1.14rem + 0.40vw), 1.50rem);
+      --step-2: clamp(1.44rem, calc(1.37rem + 0.48vw), 1.80rem); */
+      --step-0: clamp(1.00rem, calc(0.95rem + 0.33vw), 1.25rem);
+      --step-2: clamp(1.42rem, calc(1.35rem + 0.48vw), 1.78rem);
+    }
+
+    :focus-visible {
+      outline: 2px solid black;
+      outline-offset: 4px;
+    }
+
+    body {
+      position: relative;
+    }
+    
+    
+    main {
+      display: grid;
+      place-items: center;
+
+      position: relative;
+
+      min-height: 100vh;
+
+      background-color: var(--primary-paleBlue);
+    }
+    
+    .background-styling {
+      position: absolute;
+      z-index: 5;
+
+      top: 0;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+
+      position: absolute;
+      z-index: 10;
+
+      width: clamp(360px, 360px + 5vw, 33vw);
+
+      overflow: hidden;
+
+      outline: 2px solid black;
+      border-radius: var(--step-0);
+
+      font-family: var(--ff-primary);
+      font-size: var(--step-0);
+
+      background-color: var(--neutral-white);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card>*:not(:first-child) {
+      margin-inline: var(--space-m);
+    }
+
+    .card>*:last-child {
+      margin-block-end: var(--space-m);
+      align-self: center;
+    }
+
+    .order-summary {
+      margin-block-start: var(--space-l);
+
+      text-align: center;
+    }
+
+    .title {
+      margin-block-end: var(--space-s);
+
+      font-weight: var(--fw-900);
+      font-size: var(--step-2);
+    }
+
+    .description {
+      font-weight: var(--fw-500);
+      line-height: 1.5;
+
+      color: var(--neutral-desaturatedBlue);
+    }
+
+    .plan-component {
+      --icon-music-size: var(--space-xl);
+
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-s);
+
+      align-items: center;
+
+      padding: var(--space-s);
+      margin-block-start: var(--space-s);
+
+      font-weight: var(--fw-500);
+
+      background-color: var(--neutral-veryPaleBlue);
+    }
+
+    .icon-music {
+      width: var(--icon-music-size);
+      height: var(--icon-music-size);
+    }
+
+    .selected-plan {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3xs);
+    }
+
+    .plan-title {
+      font-weight: var(--fw-700);
+    }
+
+    .plan-price {
+      color: var(--neutral-desaturatedBlue);
+    }
+
+    .change-plan {
+      margin-inline-start: auto;
+
+      color: var(--primary-brightBlue);
+    }
+
+    .change-plan:hover {
+      opacity: 0.75;
+    }
+
+    .payment-btn {
+      --step--2: clamp(0.79rem, calc(0.75rem + 0.26vw), 0.99rem);
+      
+      cursor: pointer;
+
+      margin-block-start: var(--space-m);
+      padding-block: var(--space-s);
+
+      border-radius: var(--step--2);
+
+      font-size: inherit;
+      font-weight: var(--fw-700);
+
+      color: var(--neutral-veryPaleBlue);
+      background-color: var(--primary-brightBlue);
+      box-shadow: 0 4px 8px 8px var(--primary-paleBlue);
+    }
+
+    .payment-btn:hover {
+      opacity: 0.75;
+    }
+
+    .cancel-order {
+      margin-block-start: var(--space-m);
+
+      text-align: center;
+      font-weight: var(--fw-700);
+
+      color: var(--neutral-desaturatedBlue);
+    }
+
+    .cancel-order:hover {
+      color: var(--neutral-darkBlue);
+    }
+
+    
+    /*** MEDIA QUERIES ***/
+    @media screen and (max-width: 375px) {
+      main {
+        --margin-main: var(--space-s);
+
+        margin: var(--margin-main);
+      }
+
+      .card {        
+        width: calc( 100vw - var(--margin-main) * 2 );
+      }
+
+      .card > *:not(:first-child) {
+        margin-inline: var(--space-xs);
+      }
+
+      .plan-component {
+        padding-inline: var(--space-2xs);
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .plan-component {
+        flex-direction: column;
+      }
+
+      .change-plan {
+        margin-inline-start: 0;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <main>
+    <picture class="background-styling">
+      <source srcset="./images/pattern-background-mobile.svg" media="(max-width: 375px)">
+      <img src="./images/pattern-background-desktop.svg" alt="">
+    </picture>
+    <article class="card">
+      <img src="./images/illustration-hero.svg" alt="">
+      <div class="order-summary">
+        <h1 class="title">
+          Order Summary
+        </h1>
+        <p class="description">
+          You can now listen to millions of songs, audiobooks,
+          and podcasts
+          on any
+          device anywhere you like!
+        </p>
+      </div>
+      <div class="plan-component">
+        <img src="./images/icon-music.svg" alt="" class="icon-music">
+        <div class="selected-plan">
+          <div class="plan-title">
+            Annual Plan
+          </div>
+          <div class="plan-price">
+            $59.99/year
+          </div>
+        </div>
+        <span class="change-plan"><a href="./index.html">Change</a></span>
+      </div>
+      <button class="payment-btn">Proceed to Payment</button>
+      <span class="cancel-order"><a href="./index.html">Cancel
+          Order</a></span>
+    </article>
+  </main>
+</body>
+
+</html>
