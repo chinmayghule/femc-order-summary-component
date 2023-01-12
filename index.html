@@ -243,13 +243,13 @@
     /*** MEDIA QUERIES ***/
     @media screen and (max-width: 375px) {
       main {
-        --margin-main: var(--space-s);
+        --padding-main: var(--space-s);
 
-        margin: var(--margin-main);
+        padding: var(--margin-main);
       }
 
       .card {        
-        width: calc( 100vw - var(--margin-main) * 2 );
+        width: calc( 100vw - var(--padding-main) * 2 );
       }
 
       .card > *:not(:first-child) {
